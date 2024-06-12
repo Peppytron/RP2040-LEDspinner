@@ -6,7 +6,7 @@ import random
 
 PURPLE = (255,0,255)
 WHITE  = (255,255,255)
-BLACK  = (0,0,0)
+BLACK  = (0,0,0) 
 
 LED_STOP_COLOR            = WHITE
 LED_MOVE_COLOR            = PURPLE
@@ -15,14 +15,14 @@ LED_COLOR                 = LED_MOVE_COLOR
 LED_DECAY                 = 0.6
 LED_SLEEP                 = 0.01
 #LED_SLOW_DOWN             = 1.02
-LED_POSITION              = 0
+LED_POSITION              = 0    # START AT THIS POSITION
 LED_POSITION_PERIOD_RESET = 2
-LED_POSITION_PERIOD       = LED_POSITION_PERIOD_RESET
-LED_BRIGHTNESS            = 1
+LED_BRIGHTNESS            = 0.2  # LOWER BRIGHTNESS FOR DEVELOPMENT
 LED_STOP_PERIOD           = 15
+LED_POSITION_PERIOD       = 99   # IF SPINNING = 0 set to 99, ELSE SET TO LED_POSITION_PERIOD_RESET
 LED_DECELERATION          = 1.02
 
-SPINNING                  = 1
+SPINNING                  = 0    # START STILL 
 
 TIMER_REDRAW              = 0
 TIMER_POS                 = 0
@@ -42,7 +42,7 @@ for i in range(LED_NUM_PIXELS):
 def redraw_strip(DECAY,old_pixels) :
     for i in range(LED_NUM_PIXELS) :
         # ONLY DECAY LEDs NOT IN CURRENT LED_POSITION
-        if ( i != LED_POSITION ) :
+        if ( i != LED_POSITION ) : 
             pixels[i] = (LED_DECAY*old_pixels[i][0],LED_DECAY*old_pixels[i][1],LED_DECAY*old_pixels[i][2])
 
 # BRIGHT LED AT LED_POSITION WITH COLOR LED_COLOR
@@ -64,7 +64,7 @@ while True:
     ###########################################################################
     # LED STRIP DRAWING
     ###########################################################################
-
+    
     # LED STRIP DECAY EVERY TICK
     if (TIMER_REDRAW > 0 ) :
         redraw_strip(LED_DECAY,old_pixels)
@@ -80,7 +80,7 @@ while True:
             if LED_POSITION < (LED_NUM_PIXELS-1 ):
                 LED_POSITION += 1 # ADVANCE POSITION BY ONE
             else:
-                LED_POSITION  = 0 # WRAP AROUND BY RESETTING POSITION TO ZERO
+                LED_POSITION  = 0 # WRAP AROUND BY RESETTING POSITION TO ZERO  
 
             LED_POSITION_PERIOD = LED_POSITION_PERIOD * LED_DECELERATION # ADD FRICTION / SLOW DOWN
 
